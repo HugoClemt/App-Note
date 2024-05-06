@@ -9,7 +9,12 @@ async function save_note(title, text) {
 
 async function update_note(id, newNote) {
   await invoke("update_note", { id: id, new_note: newNote });
-  fetchNote(); // Rafraîchir les notes après la mise à jour
+  fetchNote();
+}
+
+async function delete_note(id) {
+  await invoke("delete_note", id);
+  fetchNote();
 }
 
 async function fetchNote() {
@@ -53,7 +58,7 @@ async function fetchNote() {
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "Delete";
     deleteBtn.addEventListener("click", async () => {
-      await invoke("delete_note", note.id);
+      await delete_note(note.id);
       fetchNote();
     });
     actionsTd.appendChild(deleteBtn);
